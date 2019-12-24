@@ -38,4 +38,23 @@ app.get('/horses', async (req, res) => {
   res.json(horses);
 })
 
+app.post('/horses/:id', async (req, res) => {
+  const id = req.params.id;
+  const horsesRef = db.collection('horses').doc(id);
+  const horseSnap = await horsesRef.get();
+  if(!horseSnap.exists){
+    res.status(404).json({
+      code: 404,
+      status : false,
+      message: `The horse ID ${id} does exist.`
+    })
+  }else{
+    res.json({
+      code: 200,
+      status : true,
+      message: "The horse ID does exist."
+    })
+  }
+})
+
 export const api = functions.https.onRequest(app);
