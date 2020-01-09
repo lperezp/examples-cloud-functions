@@ -32,25 +32,25 @@ const app = express();
 app.use(cors({ origin : true}));
 
 app.get('/horses', async (req, res) => {
-  const horseRef = db.collection('horses');
-  const docsSnap = await horseRef.get();
+  const horsesRef = db.collection('horses');
+  const docsSnap = await horsesRef.get();
   const horses = docsSnap.docs.map(doc => doc.data());
   res.json(horses);
 })
 
 app.post('/horses/:id', async (req, res) => {
   const id = req.params.id;
-  const horsesRef = db.collection('horses').doc(id);
-  const horseSnap = await horsesRef.get();
+  const horseRef = db.collection('horses').doc(id);
+  const horseSnap = await horseRef.get();
   if(!horseSnap.exists){
     res.status(404).json({
-      code: 404,
+      code: 101,
       status : false,
-      message: `The horse ID ${id} does exist.`
+      message: `The horse ID \" ${id} \" doesn't exist.`
     })
   }else{
     res.json({
-      code: 200,
+      code: 100,
       status : true,
       message: "The horse ID does exist."
     })

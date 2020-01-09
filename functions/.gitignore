@@ -4,5 +4,6 @@
 
 # Typescript v1 declaration files
 typings/
-
+src/serviceAccountKey.json
+lib/serviceAccountKey.json
 node_modules/
